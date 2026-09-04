@@ -269,7 +269,12 @@ func filterByNoOptionalCapabilities(specs et.ExtensionTestSpecs) {
 
 // filterByNetwork is a helper function to do, simple, "NameContains" filtering on tests by network
 func filterByNetwork(specs et.ExtensionTestSpecs) {
-	var networkExclusions = map[string][]string{}
+	var networkExclusions = map[string][]string{
+		"OVNKubernetes": {
+                // OVN-K does not implement the optional localhost nodeports feature.
+                "[Feature:LocalhostNodePorts]",
+        },
+	}
 
 	for network, exclusions := range networkExclusions {
 		var selectFunctions []et.SelectFunction
